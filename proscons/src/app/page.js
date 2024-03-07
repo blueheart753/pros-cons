@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Popup from './components/pros-insert-popup';
+import Popup from './components/insert-pros-cons';
 
 export default function Home() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
