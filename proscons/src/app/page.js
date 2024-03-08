@@ -8,9 +8,8 @@ export default function Home() {
   const [prosOrCons, setProsOrCons] = useState(false);
 
   const handleButtonClick = prosPopup => {
-    setProsIsPopupOpen(prosPopup);
-    setProsOrCons(prosPopup); // Set the prosOrCons state based on prosPopup value
     setIsPopupOpen(true);
+    setProsIsPopupOpen(prosPopup);
   };
 
   const handlePopupClose = () => {
@@ -18,11 +17,18 @@ export default function Home() {
     setProsIsPopupOpen(false);
   };
 
+  const keywordListType = insertType => {
+    insertType ? setProsOrCons(true) : setProsOrCons(false);
+  };
+
   return (
     <main className="h-screen flex items-center justify-center bg-zinc-900 flex-col gap-10">
       <button
         type="button"
-        onClick={() => handleButtonClick(true)}
+        onClick={() => {
+          handleButtonClick(true);
+          keywordListType(true);
+        }}
         className="basis-1/8 w-96 h-32 bg-blue-300 rounded-md shadow-mg flex items-center justify-center cursor-pointer transition-all duration-105 hover:scale-105"
       >
         <p className="font-semibold text-lg">
@@ -34,7 +40,10 @@ export default function Home() {
 
       <button
         type="button"
-        onClick={() => handleButtonClick(false)}
+        onClick={() => {
+          handleButtonClick(false);
+          keywordListType(false);
+        }}
         className="basis-1/8 w-96 h-32 bg-red-300 rounded-md shadow-mg flex items-center justify-center cursor-pointer transition-all duration-105 hover:scale-105"
       >
         <p className="font-semibold text-lg">
@@ -47,8 +56,7 @@ export default function Home() {
       {isPopupOpen && (
         <Popup
           onClose={handlePopupClose}
-          prosOrCons={prosOrCons} // Pass the prosOrCons value to the child component
-          pros_or_cons={prosIsPopupOpen ? '장점 작성하기' : '단점 작성하기'}
+          pros_or_cons={prosIsPopupOpen ? '장점' : '단점'}
         />
       )}
     </main>
