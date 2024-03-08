@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 const ProsAndConsInsert = (props, { onClose }) => {
   const { pros_or_cons } = props;
 
-  const isPros = pros_or_cons === '장점 작성하기';
+  const isPros = pros_or_cons === '장점';
 
   const allKeywords = isPros
     ? [
@@ -142,7 +142,107 @@ const ProsAndConsInsert = (props, { onClose }) => {
         '활달한',
         '호감이 가는',
       ]
-    : [x];
+    : [
+        '고집',
+        '인내력 부족',
+        '자기중심적',
+        '근심과 걱정이 많음',
+        '비판적인 태도',
+        '충동적',
+        '쉽게 화를 내는 경향',
+        '예민함',
+        '자기표현이 부족함',
+        '변덕스러움',
+        '신뢰를 쉽게 주지 않음',
+        '소통이 부족함',
+        '타인의 의견을 경시함',
+        '자기희생적인 행동',
+        '완벽주의자',
+        '쉽게 짜증이 남',
+        '타인에 대한 예의 부족',
+        '사람을 쉽게 의심함',
+        '무관심함',
+        '쉽게 낙담함',
+        '자기 비하적인 언어 사용',
+        '타인의 성과에 시기를 느낌',
+        '쉽게 포기함',
+        '과도한 자기비판',
+        '타인의 의견을 수용하지 않음',
+        '혼자만의 시간을 중요시함',
+        '타인의 감정을 이해하지 못함',
+        '실용성 부족',
+        '타인의 기대에 부응하지 못함',
+        '무책임함',
+        '자기자랑이 심함',
+        '타인의 성과를 부러워함',
+        '무관심한 척 함',
+        '성급한 결정',
+        '타인의 감정을 존중하지 않음',
+        '쉽게 낙심함',
+        '관용력 부족',
+        '목표를 명확히 설정하지 않음',
+        '타인을 배려하지 않음',
+        '부정적인 태도',
+        '불평등한 태도',
+        '불안정한 감정 표현',
+        '타인에 대한 기대치가 높음',
+        '변덕이 심함',
+        '꾸준함이 부족함',
+        '타인을 자주 비난함',
+        '독립적인 척 함',
+        '타인의 성과를 존중하지 않음',
+        '통제력 부족',
+        '타인의 의견을 경시함',
+        '남의 일에 간섭함',
+        '타인의 실수를 너무 엄하게 비판함',
+        '고민이 많음',
+        '쉽게 동요함',
+        '타인의 성공을 부러워함',
+        '쉽게 흥분함',
+        '자기 중심적인 발언',
+        '쉽게 짜증을 내는 경향',
+        '관대하지 못함',
+        '자기 의견을 강요함',
+        '타인의 의견을 존중하지 않음',
+        '불만족스러움을 자주 표현함',
+        '신뢰를 쉽게 잃음',
+        '적응력이 부족함',
+        '꼼꼼하지 못함',
+        '타인의 감정을 무시함',
+        '무모한 행동',
+        '쉽게 좌절함',
+        '타인의 지시를 따르기 어려움',
+        '비현실적인 꿈을 갖음',
+        '타인을 통제하려는 경향',
+        '자기 중심적인 행동',
+        '남의 의견을 듣지 않음',
+        '자기중심적인 사고',
+        '타인의 성과에 대한 시기',
+        '자기 중심적인 행동',
+        '타인의 의견을 존중하지 않음',
+        '통제욕이 강함',
+        '소극적인 태도',
+        '타인의 성과에 대한 시기',
+        '자기 비하적인 언어 사용',
+        '타인의 의견을 경시함',
+        '자기 편견에 빠짐',
+        '타인을 이해하지 못함',
+        '남의 일에 간섭함',
+        '타인의 성과에 시기를 느낌',
+        '현실감각이 부족함',
+        '남을 쉽게 의심함',
+        '타인의 성과에 대한 시기',
+        '자기중심적인 사고',
+        '타인의 의견을 경시함',
+        '자기 편견에 빠짐',
+        '타인을 이해하지 못함',
+        '남의 일에 간섭함',
+        '타인의 성과에 시기를 느낌',
+        '현실감각이 부족함',
+        '남을 쉽게 의심함',
+        '타인의 성과에 대한 시기',
+        '자기중심적인 사고',
+      ];
 
   const [keywords, setKeywords] = useState(['']);
   const [countKeywordsInput, setCountKeywordsInput] = useState(1);
@@ -171,11 +271,18 @@ const ProsAndConsInsert = (props, { onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="w-96 bg-white p-4 rounded-md">
+      <div className="w-4/12 bg-white px-10 p-4 rounded-md">
         <form method="POST" className="flex flex-col">
-          <p className="text-black text-xl mb-5 font-semibold text-center">
-            {pros_or_cons}
-          </p>
+          <div className="mb-5">
+            <p className="text-black text-2xl font-medium text-center">
+              {pros_or_cons}
+            </p>
+            <p className="text-gray-500 text-center p-2">
+              자신의{pros_or_cons}을 키워드를 통해 작성해주세요!
+              <br />
+              이제부터 자신의 {pros_or_cons}를 알아가요!
+            </p>
+          </div>
           {keywords.map((keyword, index) => (
             <div key={index} className="mb-2 flex justify-between items-center">
               <input
