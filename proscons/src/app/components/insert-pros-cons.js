@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 const ProsAndConsInsert = (props, { onClose }) => {
   const { pros_or_cons } = props;
 
-  const isPros = pros_or_cons === '장점';
-
-  const allKeywords = isPros
-    ? [
+  const allKeywords = [
         '강직한',
         '고요한',
         '고운',
@@ -141,32 +138,28 @@ const ProsAndConsInsert = (props, { onClose }) => {
         '헌신적인',
         '활달한',
         '호감이 가는',
-      ]
-    : [
         '고집',
         '인내력 부족',
-        '자기중심적',
-        '근심과 걱정이 많음',
-        '비판적인 태도',
+        '자기 중심적',
+        '걱정이 많음',
+        '비판적 태도',
         '충동적',
-        '쉽게 화를 내는 경향',
         '예민함',
-        '자기표현이 부족함',
-        '변덕스러움',
-        '신뢰를 쉽게 주지 않음',
-        '소통이 부족함',
-        '타인의 의견을 경시함',
-        '자기희생적인 행동',
-        '완벽주의자',
-        '쉽게 짜증이 남',
-        '타인에 대한 예의 부족',
-        '사람을 쉽게 의심함',
-        '무관심함',
-        '쉽게 낙담함',
-        '자기 비하적인 언어 사용',
-        '타인의 성과에 시기를 느낌',
-        '쉽게 포기함',
-        '과도한 자기비판',
+        '표현 부족',
+        '변덕 스러움',
+        '신뢰감 부족',
+        '소통 부족',
+        '의견 경시',
+        '자기 희생',
+        '완벽 주의',
+        '쉽게 짜증냄',
+        '예의 부족',
+        '쉽게 의심함',
+        '무관심',
+        '쉽게 낙담',
+        '자기 비하',
+        '시기',
+        '쉽게 포기',
         '타인의 의견을 수용하지 않음',
         '혼자만의 시간을 중요시함',
         '타인의 감정을 이해하지 못함',
@@ -271,11 +264,11 @@ const ProsAndConsInsert = (props, { onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="w-4/12 bg-white px-10 p-4 rounded-md">
+      <div className="w-4/12 bg-white px-10 p-4 rounded-xl">
         <form method="POST" className="flex flex-col">
           <div className="mb-5">
-            <p className="text-black text-2xl font-medium text-center">
-              {pros_or_cons}
+            <p className="text-black text-2xl text-center">
+              {pros_or_cons}을 작성해주세요
             </p>
             <p className="text-gray-500 text-center p-2">
               자신의{pros_or_cons}을 키워드를 통해 작성해주세요!
@@ -286,7 +279,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
           {keywords.map((keyword, index) => (
             <div key={index} className="mb-2 flex justify-between items-center">
               <input
-                className="w-full text-black border-2 border-gray-700 p-2 rounded-md"
+                className="w-full text-black border-2 border-gray-500 p-2 rounded-md"
                 type="text"
                 list="keywordList"
                 placeholder="키워드를 입력하세요"
@@ -302,7 +295,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
             </div>
           ))}
           <textarea
-            className="h-80 text-black border-2 border-gray-700 p-2 rounded-md"
+            className="h-80 text-black border-2 border-gray-500 p-2 rounded-md"
             maxLength={401}
             placeholder="400자 이하로 적어주세요"
           ></textarea>
@@ -328,8 +321,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
             </button>
             <button
               onClick={onClose}
-              className="mt-4 bg-blue-500 text-white p-2 rounded-md"
-            >
+              className="mt-4 bg-blue-500 text-white p-2 rounded-md">
               닫기
             </button>
           </div>
