@@ -237,7 +237,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
               {pros_or_cons}을 작성해주세요
             </p>
             <p className="text-gray-500 text-center p-2">
-              자신의{pros_or_cons}을 키워드를 통해 작성해주세요!
+              자신의 {pros_or_cons}을 키워드를 통해 작성해주세요!
               <br />
               이제부터 자신의 {pros_or_cons}를 알아가요!
             </p>
