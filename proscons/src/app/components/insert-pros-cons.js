@@ -224,11 +224,13 @@ const ProsAndConsInsert = (props, { onClose }) => {
 
   const insertKeyword = () => {
     const content = document.querySelector('textarea').value
+    let now = new Date()
 
     const data = {
       keyword_name: keywords,
       keyword_type: pros_or_cons === '장점' ? true : false,
       keyword_description: content,
+      created_at: now,
     }
 
     fetch('/api/insert_pros_cons', {

@@ -12,10 +12,12 @@ function queryPromise(queryString, values) {
 }
 
 export default async function handler(req, res) {
-  const { keyword_name, keyword_type, keyword_description } = req.body
+  const { keyword_name, keyword_type, keyword_description, created_at } =
+    req.body
 
   let queryString = `INSERT INTO keyword_table (keyword_name,keyword_type,keyword_description) VALUES (?, ?, ?)`
-  let values = [keyword_name, keyword_type, keyword_description]
+
+  let values = [keyword_name, keyword_type, keyword_description, created_at]
 
   try {
     const rows = await queryPromise(queryString, values)
