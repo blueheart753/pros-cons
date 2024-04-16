@@ -228,7 +228,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
     const data = {
       keyword_name: keywords,
       keyword_type: pros_or_cons === '장점' ? true : false,
-      keyword_text: content,
+      keyword_description: content,
     }
 
     fetch('/api/insert_pros_cons', {
