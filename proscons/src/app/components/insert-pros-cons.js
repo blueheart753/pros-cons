@@ -1,16 +1,16 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState } from 'react'
 
 const ProsAndConsInsert = (props, { onClose }) => {
-  const { pros_or_cons } = props;
+  const { pros_or_cons } = props
 
-  const [keywords, setKeywords] = useState(['']);
-  const [countKeywordsInput, setCountKeywordsInput] = useState(1);
+  const [keywords, setKeywords] = useState([''])
+  const [countKeywordsInput, setCountKeywordsInput] = useState(1)
 
   const handleAddKeyword = () => {
-    setKeywords(prevKeywords => [...prevKeywords, '']);
-    setCountKeywordsInput(prevCount => prevCount + 1);
-  };
+    setKeywords(prevKeywords => [...prevKeywords, ''])
+    setCountKeywordsInput(prevCount => prevCount + 1)
+  }
 
   const allKeywords = [
     '긍정적인',
@@ -203,33 +203,33 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '남의 일에 간섭함',
     '남을 쉽게 의심함',
     '현실감각 부족',
-  ];
+  ]
 
   const handleRemoveKeyword = index => {
     if (keywords.length === 1) {
-      return;
+      return
     }
-    const newKeywords = [...keywords];
-    newKeywords.splice(index, 1);
-    setKeywords(newKeywords);
+    const newKeywords = [...keywords]
+    newKeywords.splice(index, 1)
+    setKeywords(newKeywords)
 
-    setCountKeywordsInput(prevCount => prevCount - 1);
-  };
+    setCountKeywordsInput(prevCount => prevCount - 1)
+  }
 
   const handleKeywordChange = (index, value) => {
-    const newKeywords = [...keywords];
-    newKeywords[index] = value;
-    setKeywords(newKeywords);
-  };
+    const newKeywords = [...keywords]
+    newKeywords[index] = value
+    setKeywords(newKeywords)
+  }
 
   const insertKeyword = () => {
-    const content = document.querySelector('textarea').value;
+    const content = document.querySelector('textarea').value
 
     const data = {
+      keyword_name: keywords,
       keyword_type: pros_or_cons === '장점' ? true : false,
-      keywords: keywords,
-      content: content,
-    };
+      keyword_text: content,
+    }
 
     fetch('/api/insert_pros_cons', {
       method: 'POST',
@@ -240,17 +240,17 @@ const ProsAndConsInsert = (props, { onClose }) => {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok')
         }
-        return response.json();
+        return response.json()
       })
       .then(data => {
-        console.log('Data sent successfully:', data);
+        console.log('Data sent successfully:', data)
       })
       .catch(error => {
-        console.error('Error sending data:', error);
-      });
-  };
+        console.error('Error sending data:', error)
+      })
+  }
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
@@ -319,7 +319,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProsAndConsInsert;
+export default ProsAndConsInsert
