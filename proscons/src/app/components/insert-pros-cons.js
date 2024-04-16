@@ -4,7 +4,16 @@ import React, { useState } from 'react';
 const ProsAndConsInsert = (props, { onClose }) => {
   const { pros_or_cons } = props;
 
+  const [keywords, setKeywords] = useState(['']);
+  const [countKeywordsInput, setCountKeywordsInput] = useState(1);
+
+  const handleAddKeyword = () => {
+    setKeywords(prevKeywords => [...prevKeywords, '']);
+    setCountKeywordsInput(prevCount => prevCount + 1);
+  };
+
   const allKeywords = [
+    '긍정적인',
     '강직한',
     '고요한',
     '고운',
@@ -15,7 +24,6 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '관대한',
     '깔끔한',
     '꾸준한',
-    '긍정적인',
     '깡이 있는',
     '겸손한',
     '검소한',
@@ -165,7 +173,6 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '실용성 부족',
     '무책임함',
     '자기자랑이 심함',
-    '타인의 성과를 부러워함',
     '성급한 결정',
     '타인을 무시함',
     '쉽게 낙심함',
@@ -176,18 +183,14 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '불평등한 태도',
     '변덕이 심함',
     '꾸준함이 부족함',
-    '타인을 자주 비난함',
     '독립적인 척 함',
-    '타인을 존중하지 않음',
     '통제력 부족',
     '남의 일에 간섭함',
     '고민이 많음',
     '쉽게 동요함',
     '질투가 심함',
     '쉽게 흥분함',
-    '쉽게 짜증을 내는 경향',
     '관대하지 못함',
-    '불만족스러움을 자주 표현함',
     '신뢰를 쉽게 잃음',
     '적응력이 부족함',
     '꼼꼼하지 못함',
@@ -199,17 +202,8 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '타인을 이해하지 못함',
     '남의 일에 간섭함',
     '남을 쉽게 의심함',
-    '남의 일에 간섭함',
     '현실감각 부족',
   ];
-
-  const [keywords, setKeywords] = useState(['']);
-  const [countKeywordsInput, setCountKeywordsInput] = useState(1);
-
-  const handleAddKeyword = () => {
-    setKeywords(prevKeywords => [...prevKeywords, '']);
-    setCountKeywordsInput(prevCount => prevCount + 1);
-  };
 
   const handleRemoveKeyword = index => {
     if (keywords.length === 1) {
@@ -226,6 +220,36 @@ const ProsAndConsInsert = (props, { onClose }) => {
     const newKeywords = [...keywords];
     newKeywords[index] = value;
     setKeywords(newKeywords);
+  };
+
+  const insertKeyword = () => {
+    const content = document.querySelector('textarea').value;
+
+    const data = {
+      keyword_type: pros_or_cons === '장점' ? true : false,
+      keywords: keywords,
+      content: content,
+    };
+
+    fetch('/api/insert_pros_cons', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Data sent successfully:', data);
+      })
+      .catch(error => {
+        console.error('Error sending data:', error);
+      });
   };
 
   return (
@@ -273,15 +297,15 @@ const ProsAndConsInsert = (props, { onClose }) => {
           <div className="w-full flex justify-end gap-4">
             <button
               type="button"
-              onClick={handleAddKeyword}
-              className="mt-4 bg-gray-500 text-white p-2 rounded-md"
+              onClick={insertKeyword}
+              className="mt-4 bg-green-500 text-white p-2 rounded-md"
             >
-              임시 저장
+              계시하기
             </button>
             <button
               type="button"
               onClick={handleAddKeyword}
-              className="mt-4 bg-green-500 text-white p-2 rounded-md"
+              className="mt-4 bg-yellow-500 text-white p-2 rounded-md"
             >
               키워드 추가
             </button>
