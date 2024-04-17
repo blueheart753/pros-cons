@@ -3,16 +3,26 @@ import { useEffect } from 'react'
 
 const CompleteModal = () => {
   useEffect(() => {
-    const FadeInOut_Animation = () => {
-      const check_box = document.querySelector('#check_box')
-      if (check_box) {
-        check_box.classList.add('border-solid', 'border-4', 'border-black')
-      }
-    }
+    const check_box = document.querySelector('#check_box')
+    const check_image = document.querySelector('#checkImg')
 
     setTimeout(() => {
-      Animation_checkBox()
+      if (check_box) {
+        check_box.classList.add(
+          'border-solid',
+          'border-4',
+          'border-black',
+          'animate-spin'
+        )
+        check_image.classList.replace('opacity-0', 'opacity-1')
+      }
     }, 1000)
+
+    setTimeout(() => {
+      if (check_box) {
+        check_box.classList.remove('animate-spin')
+      }
+    }, 2000)
   }, [])
 
   return (
@@ -22,12 +32,14 @@ const CompleteModal = () => {
           <span className="font-semibold">장점</span> 작성이 완료됬습니다.
         </p>
       </div>
-      <div className="p-4 rounded-full " id="check_box">
+      <div className="p-4 rounded-full duration-75" id="check_box">
         <Image
           src={'/check-mark-svgrepo-com.svg'}
           alt="upload complete image"
           width={100}
           height={100}
+          id="checkImg"
+          className="opacity-0"
         />
       </div>
     </div>
