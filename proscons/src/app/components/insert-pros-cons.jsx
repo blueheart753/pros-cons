@@ -1,16 +1,11 @@
 'use client'
 import React, { useState } from 'react'
+import CompleteModal from './complete'
 
 const ProsAndConsInsert = (props, { onClose }) => {
   const { pros_or_cons } = props
 
   const [keywords, setKeywords] = useState([''])
-  const [countKeywordsInput, setCountKeywordsInput] = useState(1)
-
-  const handleAddKeyword = () => {
-    setKeywords(prevKeywords => [...prevKeywords, ''])
-    setCountKeywordsInput(prevCount => prevCount + 1)
-  }
 
   const allKeywords = [
     '긍정적인',
@@ -205,17 +200,6 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '현실감각 부족',
   ]
 
-  const handleRemoveKeyword = index => {
-    if (keywords.length === 1) {
-      return
-    }
-    const newKeywords = [...keywords]
-    newKeywords.splice(index, 1)
-    setKeywords(newKeywords)
-
-    setCountKeywordsInput(prevCount => prevCount - 1)
-  }
-
   const handleKeywordChange = (index, value) => {
     const newKeywords = [...keywords]
     newKeywords[index] = value
@@ -224,13 +208,11 @@ const ProsAndConsInsert = (props, { onClose }) => {
 
   const insertKeyword = () => {
     const content = document.querySelector('textarea').value
-    let now = new Date()
 
     const data = {
       keyword_name: keywords,
       keyword_type: pros_or_cons === '장점' ? true : false,
       keyword_description: content,
-      created_at: now,
     }
 
     fetch('/api/insert_pros_cons', {
@@ -255,9 +237,10 @@ const ProsAndConsInsert = (props, { onClose }) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="w-4/12 bg-white px-10 p-4 rounded-xl">
-        <form method="POST" className="flex flex-col">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center  ">
+      <div className="w-4/12 bg-white px-10 p-4 rounded-xl relative">
+        <CompleteModal />
+        <form method="POST" className="flex flex-col opacity-0">
           <div className="mb-5">
             <p className="text-black text-2xl text-center">
               {pros_or_cons}을 작성해주세요
@@ -278,12 +261,6 @@ const ProsAndConsInsert = (props, { onClose }) => {
                 value={keyword}
                 onChange={e => handleKeywordChange(index, e.target.value)}
               />
-              <input
-                type="button"
-                onClick={() => handleRemoveKeyword(index)}
-                className="w-24 ml-2 bg-red-500 text-white p-2 rounded-md cursor-pointer"
-                value={'삭제'}
-              />
             </div>
           ))}
           <textarea
@@ -303,13 +280,6 @@ const ProsAndConsInsert = (props, { onClose }) => {
               className="mt-4 bg-green-500 text-white p-2 rounded-md"
             >
               계시하기
-            </button>
-            <button
-              type="button"
-              onClick={handleAddKeyword}
-              className="mt-4 bg-yellow-500 text-white p-2 rounded-md"
-            >
-              키워드 추가
             </button>
             <button
               onClick={onClose}
