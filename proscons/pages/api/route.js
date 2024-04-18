@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+import mysql from 'mysql'
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -6,6 +6,17 @@ const connection = mysql.createConnection({
   user: 'root',
   password: '1234',
   database: 'prosconsdb',
-});
+})
 
-module.exports = connection;
+export function queryPromise(queryString, values) {
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, values, (error, results) => {
+      if (error) {
+        return reject(error)
+      }
+      resolve(results)
+    })
+  })
+}
+
+export { connection }
