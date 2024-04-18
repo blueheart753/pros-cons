@@ -1,11 +1,11 @@
-'use client'
-import React, { useState } from 'react'
-import CompleteModal from './complete'
+'use client';
+import React, { useState } from 'react';
+import CompleteModal from './complete';
 
 const ProsAndConsInsert = (props, { onClose }) => {
-  const { pros_or_cons } = props
+  const { pros_or_cons } = props;
 
-  const [keywords, setKeywords] = useState([''])
+  const [keywords, setKeywords] = useState(['']);
 
   const allKeywords = [
     '긍정적인',
@@ -198,22 +198,22 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '남의 일에 간섭함',
     '남을 쉽게 의심함',
     '현실감각 부족',
-  ]
+  ];
 
   const handleKeywordChange = (index, value) => {
-    const newKeywords = [...keywords]
-    newKeywords[index] = value
-    setKeywords(newKeywords)
-  }
+    const newKeywords = [...keywords];
+    newKeywords[index] = value;
+    setKeywords(newKeywords);
+  };
 
   const insertKeyword = () => {
-    const content = document.querySelector('textarea').value
+    const content = document.querySelector('textarea').value;
 
     const data = {
       keyword_name: keywords,
       keyword_type: pros_or_cons === '장점' ? true : false,
       keyword_description: content,
-    }
+    };
 
     fetch('/api/insert_pros_cons', {
       method: 'POST',
@@ -224,23 +224,36 @@ const ProsAndConsInsert = (props, { onClose }) => {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok')
+          throw new Error('Network response was not ok');
         }
-        return response.json()
+        return response.json();
       })
       .then(data => {
-        console.log('Data sent successfully:', data)
+        console.log('Data sent successfully:', data);
+        CompleteModalOpen();
       })
       .catch(error => {
-        console.error('Error sending data:', error)
-      })
-  }
+        console.error('Error sending data:', error);
+      });
+  };
+
+  const CompleteModalOpen = () => {
+    document
+      .querySelector('#complete-modal-box')
+      .classList.replace('hidden', 'flex');
+    document.querySelector('#pros_cons_from').classList.add('opacity-0');
+  };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center  ">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
       <div className="w-4/12 bg-white px-10 p-4 rounded-xl relative">
-        <CompleteModal />
-        <form method="POST" className="flex flex-col opacity-0">
+        <div
+          className="w-full h-full hidden flex-col items-center"
+          id="complete-modal-box"
+        >
+          <CompleteModal />
+        </div>
+        <form method="POST" className="flex flex-col" id="pros_cons_from">
           <div className="mb-5">
             <p className="text-black text-2xl text-center">
               {pros_or_cons}을 작성해주세요
@@ -291,7 +304,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProsAndConsInsert
+export default ProsAndConsInsert;
