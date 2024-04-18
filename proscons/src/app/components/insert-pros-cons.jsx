@@ -238,7 +238,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center  ">
-      <div className="w-4/12 bg-white px-10 p-4 rounded-xl relative">
+      <div className="bg-white px-10 p-4 rounded-xl relative">
         <CompleteModal />
         <form method="POST" className="flex flex-col opacity-0">
           <div className="mb-5">
