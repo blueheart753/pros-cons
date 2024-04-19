@@ -206,10 +206,16 @@ const ProsAndConsInsert = (props, { onClose }) => {
     setKeywords(newKeywords)
   }
 
-  const insertKeyword = () => {
-    const content = document.querySelector('textarea').value
+  const OpenCompleteModal = () => {
     const CompleteModalBox = document.querySelector('#complete-modal-box')
     const InsertFrom = document.querySelector('#insert_from')
+    CompleteModalBox.classList.replace('opacity-0', 'opacity-1')
+    CompleteModalBox.classList.replace('z-0', 'z-20')
+    InsertFrom.classList.add('opacity-0')
+  }
+
+  const insertKeyword = () => {
+    const content = document.querySelector('textarea').value
 
     const data = {
       keyword_name: keywords,
@@ -232,9 +238,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
       })
       .then(data => {
         console.log('Data sent successfully:', data)
-        CompleteModalBox.classList.replace('opacity-0', 'opacity-1')
-        CompleteModalBox.classList.replace('z-0', 'z-20')
-        InsertFrom.classList.add('opacity-0')
+        OpenCompleteModal()
       })
       .catch(error => {
         console.error('Error sending data:', error)
