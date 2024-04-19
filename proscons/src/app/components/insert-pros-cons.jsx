@@ -206,6 +206,14 @@ const ProsAndConsInsert = (props, { onClose }) => {
     setKeywords(newKeywords)
   }
 
+  const OpenCompleteModal = () => {
+    const CompleteModalBox = document.querySelector('#complete-modal-box')
+    const InsertFrom = document.querySelector('#insert_from')
+    CompleteModalBox.classList.replace('opacity-0', 'opacity-1')
+    CompleteModalBox.classList.replace('z-0', 'z-20')
+    InsertFrom.classList.add('opacity-0')
+  }
+
   const insertKeyword = () => {
     const content = document.querySelector('textarea').value
 
@@ -230,6 +238,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
       })
       .then(data => {
         console.log('Data sent successfully:', data)
+        OpenCompleteModal()
       })
       .catch(error => {
         console.error('Error sending data:', error)
@@ -239,8 +248,11 @@ const ProsAndConsInsert = (props, { onClose }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center  ">
       <div className="bg-white px-10 p-4 rounded-xl relative">
-        <CompleteModal />
-        <form method="POST" className="flex flex-col opacity-0">
+        <form
+          method="POST"
+          className="flex flex-col relative z-10"
+          id="insert_from"
+        >
           <div className="mb-5">
             <p className="text-black text-2xl text-center">
               {pros_or_cons}을 작성해주세요
@@ -289,6 +301,12 @@ const ProsAndConsInsert = (props, { onClose }) => {
             </button>
           </div>
         </form>
+        <div
+          className="opacity-0 absolute top-0 bottom-0 left-0 right-0 z-0"
+          id="complete-modal-box"
+        >
+          <CompleteModal />
+        </div>
       </div>
     </div>
   )

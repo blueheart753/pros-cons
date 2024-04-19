@@ -21,7 +21,7 @@ const CompleteModal = () => {
   }, [])
 
   return (
-    <div className="w-full h-full flex flex-col items-center absolute top-0 bottom-0 left-0 right-0 p-4 gap-36 z-10">
+    <div className="w-full h-full flex flex-col items-center p-4 gap-36">
       <div>
         <p className="text-black text-2xl">
           <span className="font-semibold">장점</span> 작성이 완료됬습니다.
