@@ -1,11 +1,11 @@
 'use client'
 import React, { useState } from 'react'
-import CompleteModal from './complete'
+import ResultModal from './result.jsx'
 
 const ProsAndConsInsert = (props, { onClose }) => {
-  const { pros_or_cons } = props
-
+  let { pros_or_cons } = props
   const [keywords, setKeywords] = useState([''])
+  const [isReuslt, setIsReult] = useState(false)
 
   const allKeywords = [
     '긍정적인',
@@ -200,27 +200,26 @@ const ProsAndConsInsert = (props, { onClose }) => {
     '현실감각 부족',
   ]
 
-  const handleKeywordChange = (index, value) => {
-    const newKeywords = [...keywords]
-    newKeywords[index] = value
-    setKeywords(newKeywords)
+  const handleKeywordChange = value => {
+    setKeywords([value])
   }
 
-  const OpenCompleteModal = () => {
-    const CompleteModalBox = document.querySelector('#complete-modal-box')
-    const InsertFrom = document.querySelector('#insert_from')
-    CompleteModalBox.classList.replace('opacity-0', 'opacity-1')
-    CompleteModalBox.classList.replace('z-0', 'z-20')
-    InsertFrom.classList.add('opacity-0')
+  const isModal = isResult => {
+    isResult ? setIsReult(true) : setIsReult(false)
+  }
+
+  const OpeneModal = () => {
+    const resultModal = document.querySelector('#reuslt-modal')
+    resultModal.classList.replace('opacity-0', 'opacity-1')
+    resultModal.classList.replace('z-0', 'z-10')
   }
 
   const insertKeyword = () => {
-    const content = document.querySelector('textarea').value
-
+    const content = document.querySelector('textarea').value.trim()
     const data = {
-      keyword_name: keywords,
+      keyword_name: keywords.length != 0 ? keywords : null,
       keyword_type: pros_or_cons === '장점' ? true : false,
-      keyword_description: content,
+      keyword_description: content.length != 0 ? content : null,
     }
 
     fetch('/api/insert_pros_cons', {
@@ -238,15 +237,18 @@ const ProsAndConsInsert = (props, { onClose }) => {
       })
       .then(data => {
         console.log('Data sent successfully:', data)
-        OpenCompleteModal()
+        isModal(true)
+        OpeneModal()
       })
       .catch(error => {
         console.error('Error sending data:', error)
+        isModal(false)
+        OpeneModal()
       })
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center  ">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white px-10 p-4 rounded-xl relative">
         <form
           method="POST"
@@ -258,23 +260,21 @@ const ProsAndConsInsert = (props, { onClose }) => {
               {pros_or_cons}을 작성해주세요
             </p>
             <p className="text-gray-500 text-center p-2">
-              자신의{pros_or_cons}을 키워드를 통해 작성해주세요!
+              자신의 {pros_or_cons}을 키워드를 통해 작성해주세요!
               <br />
               이제부터 자신의 {pros_or_cons}를 알아가요!
             </p>
           </div>
-          {keywords.map((keyword, index) => (
-            <div key={index} className="mb-2 flex justify-between items-center">
-              <input
-                className="w-full text-black border-2 border-gray-500 p-2 rounded-md"
-                type="text"
-                list="keywordList"
-                placeholder="키워드를 입력하세요"
-                value={keyword}
-                onChange={e => handleKeywordChange(index, e.target.value)}
-              />
-            </div>
-          ))}
+          <div className="mb-2 flex justify-between items-center">
+            <input
+              className="w-full text-black border-2 border-gray-500 p-2 rounded-md"
+              type="text"
+              list="keywordList"
+              placeholder="키워드를 입력하세요"
+              value={keywords}
+              onChange={e => handleKeywordChange(e.target.value)}
+            />
+          </div>
           <textarea
             className="h-80 text-black border-2 border-gray-500 p-2 rounded-md"
             maxLength={401}
@@ -288,8 +288,8 @@ const ProsAndConsInsert = (props, { onClose }) => {
           <div className="w-full flex justify-end gap-4">
             <button
               type="button"
-              onClick={insertKeyword}
               className="mt-4 bg-green-500 text-white p-2 rounded-md"
+              onClick={insertKeyword}
             >
               계시하기
             </button>
@@ -302,10 +302,10 @@ const ProsAndConsInsert = (props, { onClose }) => {
           </div>
         </form>
         <div
-          className="opacity-0 absolute top-0 bottom-0 left-0 right-0 z-0"
-          id="complete-modal-box"
+          id="reuslt-modal"
+          className="absolute top-0 bottom-0 left-0 right-0 opacity-0 z-0 backdrop-blur-sm bg-slate-200"
         >
-          <CompleteModal />
+          <ResultModal pros_cons={pros_or_cons} is_modal={isReuslt} />
         </div>
       </div>
     </div>
