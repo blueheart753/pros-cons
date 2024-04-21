@@ -214,7 +214,8 @@ const ProsAndConsInsert = (props, { onClose }) => {
     resultModal.classList.replace('z-0', 'z-10')
   }
 
-  const insertKeyword = () => {
+  const insertKeyword = e => {
+    e.preventDefault()
     const content = document.querySelector('textarea').value.trim()
     const data = {
       keyword_name: keywords.length != 0 ? keywords : null,
@@ -251,9 +252,9 @@ const ProsAndConsInsert = (props, { onClose }) => {
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white px-10 p-4 rounded-xl relative">
         <form
-          method="POST"
           className="flex flex-col relative z-10"
           id="insert_from"
+          onSubmit={insertKeyword}
         >
           <div className="mb-5">
             <p className="text-black text-2xl text-center">
@@ -270,6 +271,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
               className="w-full text-black border-2 border-gray-500 p-2 rounded-md"
               type="text"
               list="keywordList"
+              required
               placeholder="키워드를 입력하세요"
               value={keywords}
               onChange={e => handleKeywordChange(e.target.value)}
@@ -279,6 +281,7 @@ const ProsAndConsInsert = (props, { onClose }) => {
             className="h-80 text-black border-2 border-gray-500 p-2 rounded-md"
             maxLength={401}
             placeholder="400자 이하로 적어주세요"
+            required
           ></textarea>
           <datalist id="keywordList">
             {allKeywords.map((keyword, index) => (
@@ -287,9 +290,8 @@ const ProsAndConsInsert = (props, { onClose }) => {
           </datalist>
           <div className="w-full flex justify-end gap-4">
             <button
-              type="button"
+              type="submit"
               className="mt-4 bg-green-500 text-white p-2 rounded-md"
-              onClick={insertKeyword}
             >
               계시하기
             </button>
